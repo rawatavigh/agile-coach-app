@@ -3,23 +3,22 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Agile Coach AI</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<title>Agile Coach AI — Your Sprint's Best Friend</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;0,900;1,300&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
   :root {
-    --bg: #0a0a0f;
-    --surface: #13131a;
-    --surface2: #1c1c26;
-    --border: #2a2a38;
-    --accent: #7c6af7;
-    --accent2: #4ade80;
-    --accent3: #fb923c;
-    --text: #f0f0f8;
-    --text2: #8888aa;
-    --text3: #4a4a66;
-    --user-bubble: #1e1e30;
-    --bot-bubble: #13131a;
-    --radius: 16px;
+    --bg: #f5f0e8;
+    --surface: #fffdf7;
+    --surface2: #f0ebe0;
+    --border: #ddd8cc;
+    --accent: #2d6a4f;
+    --accent2: #e76f51;
+    --accent3: #457b9d;
+    --text: #1a1a2e;
+    --text2: #5a5a72;
+    --text3: #9a9aaa;
+    --radius: 14px;
+    --shadow: 0 2px 20px rgba(0,0,0,0.08);
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -34,85 +33,70 @@
     overflow: hidden;
   }
 
-  /* Background grid */
+  /* Subtle paper texture */
   body::before {
     content: '';
     position: fixed;
     inset: 0;
-    background-image:
-      linear-gradient(rgba(124,106,247,0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(124,106,247,0.04) 1px, transparent 1px);
-    background-size: 40px 40px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%23f5f0e8'/%3E%3Ccircle cx='1' cy='1' r='0.5' fill='%23e8e3d8' opacity='0.5'/%3E%3C/svg%3E");
     pointer-events: none;
     z-index: 0;
   }
-
-  /* Glow orbs */
-  .orb {
-    position: fixed;
-    border-radius: 50%;
-    filter: blur(80px);
-    pointer-events: none;
-    z-index: 0;
-  }
-  .orb1 { width: 400px; height: 400px; background: rgba(124,106,247,0.12); top: -100px; right: -100px; }
-  .orb2 { width: 300px; height: 300px; background: rgba(74,222,128,0.07); bottom: 100px; left: -80px; }
 
   /* Header */
   header {
     position: relative;
     z-index: 10;
-    padding: 18px 28px;
-    border-bottom: 1px solid var(--border);
-    background: rgba(10,10,15,0.8);
-    backdrop-filter: blur(20px);
+    padding: 16px 28px;
+    background: var(--surface);
+    border-bottom: 2px solid var(--text);
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-shrink: 0;
+    box-shadow: var(--shadow);
   }
 
-  .logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
+  .logo { display: flex; align-items: center; gap: 14px; }
 
-  .logo-icon {
-    width: 38px; height: 38px;
-    background: linear-gradient(135deg, var(--accent), #a78bfa);
+  .logo-mark {
+    width: 42px; height: 42px;
+    background: var(--text);
     border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 18px;
-    box-shadow: 0 0 20px rgba(124,106,247,0.4);
+    font-size: 20px;
   }
 
   .logo-text {
-    font-family: 'Syne', sans-serif;
-    font-size: 18px;
-    font-weight: 800;
-    letter-spacing: -0.03em;
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 1;
   }
-  .logo-text span { color: var(--accent); }
-
-  .header-badges {
-    display: flex;
-    gap: 8px;
-    align-items: center;
+  .logo-sub {
+    font-size: 11px;
+    color: var(--text2);
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-top: 2px;
+    font-family: 'DM Mono', monospace;
   }
 
-  .badge {
-    font-size: 10px;
+  .header-right { display: flex; gap: 8px; align-items: center; }
+  .pill {
+    font-size: 11px;
     font-weight: 600;
-    padding: 4px 10px;
+    padding: 5px 12px;
     border-radius: 20px;
     font-family: 'DM Mono', monospace;
-    letter-spacing: 0.03em;
+    border: 1.5px solid;
   }
-  .badge-green { background: rgba(74,222,128,0.12); color: var(--accent2); border: 1px solid rgba(74,222,128,0.2); }
-  .badge-purple { background: rgba(124,106,247,0.12); color: var(--accent); border: 1px solid rgba(124,106,247,0.2); }
+  .pill-green { background: #d8f3dc; color: var(--accent); border-color: var(--accent); }
+  .pill-dark { background: var(--text); color: var(--bg); border-color: var(--text); }
 
-  /* Main layout */
+  /* Layout */
   .layout {
     display: flex;
     flex: 1;
@@ -123,36 +107,36 @@
 
   /* Sidebar */
   .sidebar {
-    width: 240px;
+    width: 260px;
     flex-shrink: 0;
-    border-right: 1px solid var(--border);
+    border-right: 2px solid var(--border);
     padding: 20px 16px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
     overflow-y: auto;
-    background: rgba(13,13,20,0.6);
+    background: var(--surface);
   }
 
   .sidebar-title {
     font-size: 10px;
     font-weight: 600;
     color: var(--text3);
-    letter-spacing: 0.1em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     padding: 0 8px;
-    margin-bottom: 4px;
+    margin: 8px 0 4px;
     font-family: 'DM Mono', monospace;
   }
 
   .example-btn {
-    background: var(--surface);
-    border: 1px solid var(--border);
+    background: transparent;
+    border: 1.5px solid var(--border);
     border-radius: 10px;
     padding: 10px 12px;
     cursor: pointer;
     text-align: left;
-    transition: all 0.2s;
+    transition: all 0.18s;
     color: var(--text2);
     font-size: 12px;
     line-height: 1.5;
@@ -162,35 +146,31 @@
     background: var(--surface2);
     border-color: var(--accent);
     color: var(--text);
-    transform: translateX(2px);
+    transform: translateX(3px);
   }
   .example-btn strong {
     display: block;
     color: var(--text);
-    font-size: 11px;
-    margin-bottom: 3px;
-    font-weight: 500;
+    font-size: 12px;
+    margin-bottom: 2px;
+    font-weight: 600;
   }
 
-  .sidebar-divider {
-    height: 1px;
-    background: var(--border);
-    margin: 8px 0;
-  }
+  .sidebar-divider { height: 1.5px; background: var(--border); margin: 10px 0; }
 
-  .sidebar-info {
+  .sidebar-tip {
     margin-top: auto;
-    padding: 12px;
-    background: rgba(124,106,247,0.06);
-    border: 1px solid rgba(124,106,247,0.15);
+    padding: 12px 14px;
+    background: #d8f3dc;
+    border: 1.5px solid var(--accent);
     border-radius: 10px;
     font-size: 11px;
-    color: var(--text2);
+    color: var(--accent);
     line-height: 1.6;
   }
-  .sidebar-info strong { color: var(--accent); display: block; margin-bottom: 4px; }
+  .sidebar-tip strong { display: block; font-size: 12px; margin-bottom: 3px; }
 
-  /* Chat area */
+  /* Chat */
   .chat-area {
     flex: 1;
     display: flex;
@@ -198,22 +178,20 @@
     overflow: hidden;
   }
 
-  /* Messages */
   .messages {
     flex: 1;
     overflow-y: auto;
-    padding: 28px 32px;
+    padding: 32px 36px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 24px;
     scroll-behavior: smooth;
   }
-
-  .messages::-webkit-scrollbar { width: 4px; }
+  .messages::-webkit-scrollbar { width: 5px; }
   .messages::-webkit-scrollbar-track { background: transparent; }
   .messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
 
-  /* Welcome screen */
+  /* Welcome */
   .welcome {
     flex: 1;
     display: flex;
@@ -222,36 +200,38 @@
     justify-content: center;
     text-align: center;
     padding: 40px;
-    gap: 16px;
-    animation: fadeUp 0.6s ease;
+    gap: 14px;
+    animation: fadeUp 0.5s ease;
   }
 
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
+    from { opacity: 0; transform: translateY(16px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
   .welcome-icon {
-    width: 72px; height: 72px;
-    background: linear-gradient(135deg, var(--accent), #a78bfa);
+    width: 80px; height: 80px;
+    background: var(--text);
     border-radius: 20px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 32px;
-    box-shadow: 0 0 40px rgba(124,106,247,0.3);
-    margin-bottom: 4px;
+    font-size: 36px;
+    box-shadow: 6px 6px 0 var(--accent);
+    margin-bottom: 8px;
   }
 
   .welcome h2 {
-    font-family: 'Syne', sans-serif;
-    font-size: 26px;
-    font-weight: 800;
-    letter-spacing: -0.03em;
+    font-family: 'Fraunces', serif;
+    font-size: 32px;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 1.1;
   }
+  .welcome h2 em { color: var(--accent2); font-style: italic; }
 
   .welcome p {
     color: var(--text2);
-    font-size: 14px;
-    max-width: 380px;
+    font-size: 15px;
+    max-width: 400px;
     line-height: 1.7;
   }
 
@@ -262,148 +242,132 @@
     justify-content: center;
     margin-top: 8px;
   }
-
   .chip {
-    background: var(--surface2);
-    border: 1px solid var(--border);
+    background: var(--surface);
+    border: 1.5px solid var(--border);
     border-radius: 8px;
-    padding: 6px 12px;
-    font-size: 12px;
+    padding: 7px 14px;
+    font-size: 13px;
     color: var(--text2);
     cursor: pointer;
-    transition: all 0.2s;
-    font-family: 'DM Mono', monospace;
+    transition: all 0.18s;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
   }
-  .chip:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-    background: rgba(124,106,247,0.08);
-  }
+  .chip:hover { border-color: var(--accent); color: var(--accent); background: #d8f3dc; }
 
-  /* Message bubbles */
-  .message {
-    display: flex;
-    gap: 12px;
-    animation: fadeUp 0.3s ease;
-    max-width: 800px;
-  }
-
-  .message.user { flex-direction: row-reverse; align-self: flex-end; }
-  .message.bot { align-self: flex-start; }
+  /* Messages */
+  .message { display: flex; gap: 12px; animation: fadeUp 0.3s ease; }
+  .message.user { flex-direction: row-reverse; align-self: flex-end; max-width: 600px; }
+  .message.bot { align-self: flex-start; max-width: 680px; }
 
   .avatar {
-    width: 34px; height: 34px;
+    width: 36px; height: 36px;
     border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 15px;
+    font-size: 16px;
     flex-shrink: 0;
+    border: 1.5px solid var(--border);
   }
-  .avatar-bot { background: linear-gradient(135deg, var(--accent), #a78bfa); box-shadow: 0 0 12px rgba(124,106,247,0.3); }
-  .avatar-user { background: var(--surface2); border: 1px solid var(--border); }
+  .avatar-bot { background: var(--text); border-color: var(--text); }
+  .avatar-user { background: var(--surface2); }
 
   .bubble {
     padding: 14px 18px;
     border-radius: 14px;
     font-size: 14px;
-    line-height: 1.75;
-    max-width: 560px;
+    line-height: 1.7;
+    border: 1.5px solid;
   }
-
   .bubble-user {
-    background: var(--user-bubble);
-    border: 1px solid var(--border);
-    color: var(--text);
+    background: var(--text);
+    border-color: var(--text);
+    color: var(--bg);
     border-top-right-radius: 4px;
+    font-weight: 400;
   }
-
   .bubble-bot {
-    background: var(--bot-bubble);
-    border: 1px solid var(--border);
+    background: var(--surface);
+    border-color: var(--border);
     color: var(--text);
     border-top-left-radius: 4px;
+    box-shadow: var(--shadow);
   }
 
-  /* Bot response sections */
-  .section-block {
-    margin-bottom: 14px;
-    padding-bottom: 14px;
-    border-bottom: 1px solid var(--border);
-  }
+  /* Bot sections */
+  .section-block { margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px dashed var(--border); }
   .section-block:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
 
   .section-heading {
     font-family: 'DM Mono', monospace;
     font-size: 11px;
     font-weight: 500;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.08em;
     margin-bottom: 8px;
     display: flex;
     align-items: center;
     gap: 6px;
+    text-transform: uppercase;
   }
 
   .section-content {
     font-size: 13px;
     color: var(--text2);
-    line-height: 1.8;
+    line-height: 1.85;
     white-space: pre-wrap;
   }
 
-  .health-score {
+  .health-pill {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    background: rgba(74,222,128,0.08);
-    border: 1px solid rgba(74,222,128,0.2);
-    border-radius: 8px;
-    padding: 6px 12px;
+    gap: 6px;
+    background: #d8f3dc;
+    border: 1.5px solid var(--accent);
+    border-radius: 20px;
+    padding: 4px 12px;
     font-family: 'DM Mono', monospace;
     font-size: 13px;
-    color: var(--accent2);
-    margin-bottom: 6px;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 8px;
   }
 
-  /* Typing indicator */
-  .typing {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    padding: 14px 18px;
-  }
+  /* Typing */
+  .typing { display: flex; align-items: center; gap: 5px; padding: 4px 0; }
   .typing-dot {
     width: 7px; height: 7px;
     border-radius: 50%;
     background: var(--accent);
-    animation: bounce 1.2s infinite;
+    animation: typingBounce 1.2s infinite;
   }
   .typing-dot:nth-child(2) { animation-delay: 0.2s; }
   .typing-dot:nth-child(3) { animation-delay: 0.4s; }
-
-  @keyframes bounce {
-    0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
-    30% { transform: translateY(-6px); opacity: 1; }
+  @keyframes typingBounce {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.3; }
+    30% { transform: translateY(-7px); opacity: 1; }
   }
 
-  /* Input area */
+  /* Input */
   .input-area {
-    padding: 20px 32px 24px;
-    border-top: 1px solid var(--border);
-    background: rgba(10,10,15,0.8);
-    backdrop-filter: blur(20px);
+    padding: 18px 36px 24px;
+    border-top: 2px solid var(--border);
+    background: var(--surface);
     flex-shrink: 0;
   }
 
   .input-wrap {
-    background: var(--surface);
-    border: 1px solid var(--border);
+    background: var(--bg);
+    border: 2px solid var(--border);
     border-radius: var(--radius);
     display: flex;
     flex-direction: column;
-    gap: 0;
-    transition: border-color 0.2s;
+    transition: border-color 0.2s, box-shadow 0.2s;
     overflow: hidden;
   }
-  .input-wrap:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(124,106,247,0.1); }
+  .input-wrap:focus-within {
+    border-color: var(--accent);
+    box-shadow: 4px 4px 0 var(--accent);
+  }
 
   textarea {
     background: transparent;
@@ -416,7 +380,7 @@
     resize: none;
     padding: 16px 18px 8px;
     width: 100%;
-    min-height: 60px;
+    min-height: 64px;
     max-height: 140px;
   }
   textarea::placeholder { color: var(--text3); }
@@ -435,154 +399,107 @@
   }
 
   .send-btn {
-    background: linear-gradient(135deg, var(--accent), #a78bfa);
+    background: var(--text);
     border: none;
     border-radius: 10px;
-    color: #fff;
+    color: var(--bg);
     font-size: 13px;
     font-weight: 600;
-    padding: 8px 18px;
+    padding: 9px 20px;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 7px;
     font-family: 'DM Sans', sans-serif;
-    transition: all 0.2s;
-    box-shadow: 0 4px 14px rgba(124,106,247,0.3);
+    transition: all 0.18s;
+    box-shadow: 3px 3px 0 var(--accent);
   }
-  .send-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(124,106,247,0.4); }
-  .send-btn:active { transform: translateY(0); }
-  .send-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
-
-  /* API key input */
-  .api-section {
-    padding: 16px 32px;
-    background: rgba(251,146,60,0.04);
-    border-bottom: 1px solid rgba(251,146,60,0.15);
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    flex-shrink: 0;
-  }
-  .api-label {
-    font-size: 11px;
-    color: var(--accent3);
-    font-family: 'DM Mono', monospace;
-    white-space: nowrap;
-    font-weight: 500;
-  }
-  .api-input {
-    flex: 1;
-    background: var(--surface);
-    border: 1px solid rgba(251,146,60,0.25);
-    border-radius: 8px;
-    color: var(--text);
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    padding: 7px 12px;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-  .api-input:focus { border-color: var(--accent3); }
-  .api-input::placeholder { color: var(--text3); }
-  .api-status {
-    font-size: 11px;
-    font-family: 'DM Mono', monospace;
-    white-space: nowrap;
-  }
-  .api-ok { color: var(--accent2); }
-  .api-missing { color: var(--accent3); }
+  .send-btn:hover { transform: translate(-1px, -1px); box-shadow: 4px 4px 0 var(--accent); }
+  .send-btn:active { transform: translate(1px, 1px); box-shadow: 2px 2px 0 var(--accent); }
+  .send-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: 3px 3px 0 var(--accent); }
 
   @media (max-width: 640px) {
     .sidebar { display: none; }
     .messages { padding: 16px; }
-    .input-area { padding: 12px 16px 16px; }
-    .api-section { padding: 10px 16px; }
+    .input-area { padding: 12px 16px 20px; }
+    header { padding: 12px 16px; }
   }
 </style>
 </head>
 <body>
 
-<div class="orb orb1"></div>
-<div class="orb orb2"></div>
-
-<!-- Header -->
 <header>
   <div class="logo">
-    <div class="logo-icon">🤖</div>
-    <div class="logo-text">Agile<span>Coach</span> AI</div>
+    <div class="logo-mark">🏃</div>
+    <div>
+      <div class="logo-text">Agile Coach <em style="font-style:italic;color:#e76f51;">AI</em></div>
+      <div class="logo-sub">Powered by Groq · Llama 3.3</div>
+    </div>
   </div>
-  <div class="header-badges">
-    <div class="badge badge-green">● LIVE</div>
-    <div class="badge badge-purple">Groq · Llama 3.3</div>
+  <div class="header-right">
+    <div class="pill pill-green">● Live</div>
+    <div class="pill pill-dark">Free to use</div>
   </div>
 </header>
 
-<!-- API Key bar -->
-<div class="api-section">
-  <div class="api-label">GROQ API KEY</div>
-  <input class="api-input" type="password" id="apiKey" placeholder="gsk_xxxxxxxxxxxxxxxxxxxx — paste your free Groq key here" oninput="checkKey()"/>
-  <div class="api-status" id="apiStatus">
-    <span class="api-missing">⚠ key required</span>
-  </div>
-</div>
-
-<!-- Layout -->
 <div class="layout">
 
-  <!-- Sidebar -->
   <div class="sidebar">
     <div class="sidebar-title">Try an example</div>
 
     <button class="example-btn" onclick="loadExample(0)">
       <strong>🔴 Velocity dropped</strong>
-      Sprint ended with velocity down 30%. Stories carried over. Team felt blocked all week.
+      Sprint 12 ended. Velocity down 30%. 4 stories carried over. Team felt blocked all week.
     </button>
 
     <button class="example-btn" onclick="loadExample(1)">
-      <strong>⚠️ QA skipped twice</strong>
-      QA was skipped in last 2 sprints due to time pressure. Technical debt is growing fast.
+      <strong>⚠️ QA keeps getting skipped</strong>
+      QA skipped twice due to time pressure. Technical debt growing fast.
     </button>
 
     <button class="example-btn" onclick="loadExample(2)">
-      <strong>🔄 Team conflict</strong>
-      Two senior devs disagreeing on architecture. Standups running 30+ mins. Morale low.
+      <strong>😤 Team conflict</strong>
+      Two devs disagreeing on architecture. Standups running 30+ mins. Morale low.
     </button>
 
     <button class="example-btn" onclick="loadExample(3)">
-      <strong>✅ Good sprint</strong>
-      Velocity hit 42 points. All stories done. Team happy. Stakeholder demo went well.
+      <strong>✅ Great sprint — what next?</strong>
+      Best sprint yet. Velocity hit 42, all stories done. How do we keep this up?
+    </button>
+
+    <button class="example-btn" onclick="loadExample(4)">
+      <strong>🆕 New team member joined</strong>
+      Junior dev joined mid-sprint. Velocity dipped but team was supportive. How to onboard well?
     </button>
 
     <div class="sidebar-divider"></div>
-    <div class="sidebar-title">What to include</div>
+    <div class="sidebar-title">Include in your message</div>
 
-    <button class="example-btn" style="cursor:default;">
-      <strong>Sprint velocity</strong>
-      Planned vs actual points completed
+    <button class="example-btn" style="cursor:default; pointer-events:none;">
+      📊 <strong>Velocity numbers</strong>
+      Planned vs actual points
     </button>
-    <button class="example-btn" style="cursor:default;">
-      <strong>Blockers</strong>
-      What slowed the team down
+    <button class="example-btn" style="cursor:default; pointer-events:none;">
+      🚧 <strong>Blockers</strong>
+      What slowed the team
     </button>
-    <button class="example-btn" style="cursor:default;">
-      <strong>Team mood</strong>
+    <button class="example-btn" style="cursor:default; pointer-events:none;">
+      😊 <strong>Team mood</strong>
       How the team felt overall
     </button>
 
-    <div class="sidebar-info">
-      <strong>💡 Pro tip</strong>
-      The more detail you give, the more specific the coaching. Include numbers where you have them.
+    <div class="sidebar-tip">
+      <strong>💡 Better input = better coaching</strong>
+      The more detail you share, the more specific and useful the coaching gets. Numbers help!
     </div>
   </div>
 
-  <!-- Chat -->
   <div class="chat-area">
     <div class="messages" id="messages">
       <div class="welcome" id="welcome">
         <div class="welcome-icon">🏃</div>
-        <h2>Your AI Agile Coach</h2>
-        <p>Paste your sprint summary and get instant coaching — problems identified, retrospective written, and a health score in seconds.</p>
+        <h2>Your sprint's<br><em>honest coach</em></h2>
+        <p>Describe your sprint and get instant coaching — problems identified, retrospective written, and a health score. No fluff, no generic advice.</p>
         <div class="welcome-chips">
           <div class="chip" onclick="loadExample(0)">Velocity dropped</div>
           <div class="chip" onclick="loadExample(1)">QA skipped</div>
@@ -592,14 +509,17 @@
       </div>
     </div>
 
-    <!-- Input -->
     <div class="input-area">
       <div class="input-wrap">
-        <textarea id="input" placeholder="Describe your sprint... e.g. Sprint 12 ended. Velocity dropped from 42 to 28. 4 stories carried over. Team felt blocked by unclear requirements. Demo went well." rows="3" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+        <textarea id="userInput"
+          placeholder="Describe your sprint... e.g. Sprint 12 ended. Velocity dropped from 42 to 28. 4 stories carried over. Team felt blocked by unclear requirements. Demo went well but QA was skipped again."
+          rows="3"
+          onkeydown="handleKey(event)"
+          oninput="autoResize(this)"></textarea>
         <div class="input-footer">
           <span class="input-hint">Enter to send · Shift+Enter for new line</span>
           <button class="send-btn" id="sendBtn" onclick="sendMessage()">
-            Send <span>↑</span>
+            Coach me ↑
           </button>
         </div>
       </div>
@@ -610,26 +530,18 @@
 
 <script>
   const examples = [
-    "Sprint 12 just ended. Velocity dropped from 42 to 28 points. 4 stories were carried over to next sprint. The team said they felt blocked a lot — unclear requirements from the product owner. QA was skipped twice due to time pressure. Demo went okay but stakeholders had questions we couldn't answer.",
-    "We just finished Sprint 8. Velocity was okay at 36 points but QA has been skipped in the last 2 sprints because we keep running out of time. Technical debt is growing and the team is starting to complain. We're worried about the quality of what we're releasing.",
-    "Sprint 6 done. Two senior developers have been disagreeing on the architecture direction for 3 weeks. Standups are running over 30 minutes. The rest of the team is disengaged. Velocity is still okay at 38 points but morale is low and people are starting to disengage.",
-    "Sprint 10 was our best yet. Velocity hit 42 points, all stories completed, no carryover. The team felt energised and the stakeholder demo received really positive feedback. One junior developer delivered their first solo feature. What should we focus on to keep this momentum?"
+    "Sprint 12 just ended. Velocity dropped from 42 to 28 points. 4 stories were carried over to next sprint. The team said they felt blocked a lot — unclear requirements from the product owner. QA was skipped twice due to time pressure. The demo went okay but stakeholders had questions we couldn't answer.",
+    "We just finished Sprint 8. Velocity was okay at 36 points but QA has been skipped in the last 2 sprints because we keep running out of time. Technical debt is growing and the team is starting to complain. We are worried about the quality of what we're shipping.",
+    "Sprint 6 done. Two senior developers have been disagreeing on the architecture direction for 3 weeks. Standups are running over 30 minutes every day. The rest of the team is disengaged. Velocity is still okay at 38 points but morale is visibly low.",
+    "Sprint 10 was our best yet. Velocity hit 42 points, all stories were completed, no carryover. The team felt energised and the stakeholder demo received really positive feedback. One junior developer delivered their first solo feature. What should we focus on to maintain this momentum?",
+    "A new junior developer joined our team mid-Sprint 9. Velocity dipped slightly from 38 to 32 points as senior devs spent time onboarding them. The new team member seems eager but is struggling with the codebase. The rest of the team was supportive. How do we onboard well without hurting velocity?"
   ];
 
   function loadExample(i) {
-    document.getElementById('input').value = examples[i];
-    autoResize(document.getElementById('input'));
-    document.getElementById('input').focus();
-  }
-
-  function checkKey() {
-    const key = document.getElementById('apiKey').value.trim();
-    const status = document.getElementById('apiStatus');
-    if (key.startsWith('gsk_') && key.length > 20) {
-      status.innerHTML = '<span class="api-ok">✓ key ready</span>';
-    } else {
-      status.innerHTML = '<span class="api-missing">⚠ key required</span>';
-    }
+    const input = document.getElementById('userInput');
+    input.value = examples[i];
+    autoResize(input);
+    input.focus();
   }
 
   function autoResize(el) {
@@ -649,27 +561,22 @@
     if (w) w.remove();
   }
 
-  function addMessage(role, text) {
+  function scrollToBottom() {
+    const m = document.getElementById('messages');
+    m.scrollTop = m.scrollHeight;
+  }
+
+  function addUserMessage(text) {
     hideWelcome();
     const container = document.getElementById('messages');
     const div = document.createElement('div');
-    div.className = `message ${role}`;
-
-    if (role === 'user') {
-      div.innerHTML = `
-        <div class="avatar avatar-user">👤</div>
-        <div class="bubble bubble-user">${text.replace(/\n/g,'<br>')}</div>
-      `;
-    } else {
-      div.innerHTML = `
-        <div class="avatar avatar-bot">🤖</div>
-        <div class="bubble bubble-bot">${formatBotReply(text)}</div>
-      `;
-    }
-
+    div.className = 'message user';
+    div.innerHTML = `
+      <div class="avatar avatar-user">👤</div>
+      <div class="bubble bubble-user">${text.replace(/\n/g,'<br>')}</div>
+    `;
     container.appendChild(div);
-    container.scrollTop = container.scrollHeight;
-    return div;
+    scrollToBottom();
   }
 
   function addTyping() {
@@ -677,7 +584,7 @@
     const container = document.getElementById('messages');
     const div = document.createElement('div');
     div.className = 'message bot';
-    div.id = 'typing';
+    div.id = 'typingIndicator';
     div.innerHTML = `
       <div class="avatar avatar-bot">🤖</div>
       <div class="bubble bubble-bot">
@@ -689,145 +596,106 @@
       </div>
     `;
     container.appendChild(div);
-    container.scrollTop = container.scrollHeight;
+    scrollToBottom();
   }
 
   function removeTyping() {
-    const t = document.getElementById('typing');
+    const t = document.getElementById('typingIndicator');
     if (t) t.remove();
   }
 
-  function formatBotReply(text) {
-    // Parse the 4 sections from the AI response
-    const sections = [
-      { emoji: '🔴', key: 'TOP PROBLEMS',    color: '#f87171' },
-      { emoji: '🔄', key: 'RETROSPECTIVE',   color: '#60a5fa' },
-      { emoji: '💡', key: 'NEXT SPRINT TIP', color: '#fbbf24' },
-      { emoji: '❤️', key: 'HEALTH SCORE',    color: '#4ade80' },
+  function formatReply(text) {
+    const sectionDefs = [
+      { key: 'TOP PROBLEMS',    emoji: '🔴', color: '#c0392b' },
+      { key: 'RETROSPECTIVE',   emoji: '🔄', color: '#457b9d' },
+      { key: 'NEXT SPRINT TIP', emoji: '💡', color: '#e76f51' },
+      { key: 'HEALTH SCORE',    emoji: '❤️', color: '#2d6a4f' },
     ];
 
-    let html = '';
-    let remaining = text.trim();
+    // Split text by section headers
+    const headerPattern = /(?:🔴|🔄|💡|❤️)?\s*(?:TOP PROBLEMS|RETROSPECTIVE|NEXT SPRINT TIP|HEALTH SCORE[:\s]*\d*\/?\d*)/gi;
+    const headers = text.match(headerPattern) || [];
+    const parts = text.split(headerPattern);
 
-    // Try to split by known section headers
-    const sectionRegex = /(?:🔴|##\s*)?TOP PROBLEMS|(?:🔄|##\s*)?RETROSPECTIVE|(?:💡|##\s*)?NEXT SPRINT TIP|(?:❤️|##\s*)?HEALTH SCORE/gi;
-    const parts = remaining.split(sectionRegex).filter(p => p.trim());
-    const headers = remaining.match(sectionRegex) || [];
-
-    if (headers.length >= 1) {
-      headers.forEach((header, i) => {
-        const content = (parts[i + 1] || parts[i] || '').trim()
-          .replace(/^[:：\-\s]+/, '')
-          .replace(/\*\*(.*?)\*\*/g, '$1')
-          .replace(/#{1,6}\s*/g, '');
-
-        const sec = sections.find(s => header.toUpperCase().includes(s.key));
-        const emoji = sec ? sec.emoji : '📌';
-        const label = sec ? sec.key : header;
-        const color = sec ? sec.color : '#fff';
-
-        // Special treatment for health score
-        const isHealth = label === 'HEALTH SCORE';
-        const scoreMatch = content.match(/(\d+)\s*\/\s*10/);
-
-        html += `<div class="section-block">
-          <div class="section-heading" style="color:${color}">
-            ${emoji} <span style="font-size:10px; letter-spacing:0.08em;">${label}</span>
-          </div>`;
-
-        if (isHealth && scoreMatch) {
-          html += `<div class="health-score">Score: ${scoreMatch[0]}</div><br>`;
-          const reason = content.replace(/\d+\s*\/\s*10\s*[-–:]?\s*/,'').trim();
-          html += `<div class="section-content">${reason.replace(/\n/g,'<br>')}</div>`;
-        } else {
-          html += `<div class="section-content">${content.replace(/\n/g,'<br>')}</div>`;
-        }
-        html += '</div>';
-      });
-    } else {
-      // Fallback: just show plain text
-      html = `<div class="section-content">${text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'$1')}</div>`;
+    if (headers.length === 0) {
+      // fallback plain text
+      return `<div class="section-content">${text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'$1')}</div>`;
     }
+
+    let html = '';
+    headers.forEach((header, i) => {
+      const content = (parts[i + 1] || '').trim()
+        .replace(/^[:：\-\s]+/, '')
+        .replace(/\*\*(.*?)\*\*/g, '$1')
+        .replace(/#{1,6}\s*/g, '');
+
+      const def = sectionDefs.find(s => header.toUpperCase().includes(s.key));
+      const emoji = def ? def.emoji : '📌';
+      const label = def ? def.key : header.trim();
+      const color = def ? def.color : '#333';
+      const isHealth = label === 'HEALTH SCORE';
+      const scoreMatch = content.match(/(\d+)\s*\/\s*10/);
+
+      html += `<div class="section-block">
+        <div class="section-heading" style="color:${color}">
+          ${emoji} ${label}
+        </div>`;
+
+      if (isHealth && scoreMatch) {
+        const reason = content.replace(/\d+\s*\/\s*10\s*[-–:.]?\s*/, '').trim();
+        html += `<div class="health-pill">Score ${scoreMatch[0]}</div>`;
+        if (reason) html += `<div class="section-content" style="margin-top:6px;">${reason.replace(/\n/g,'<br>')}</div>`;
+      } else {
+        html += `<div class="section-content">${content.replace(/\n/g,'<br>')}</div>`;
+      }
+
+      html += '</div>';
+    });
 
     return html;
   }
 
+  function addBotMessage(text) {
+    const container = document.getElementById('messages');
+    const div = document.createElement('div');
+    div.className = 'message bot';
+    div.innerHTML = `
+      <div class="avatar avatar-bot">🤖</div>
+      <div class="bubble bubble-bot">${formatReply(text)}</div>
+    `;
+    container.appendChild(div);
+    scrollToBottom();
+  }
+
   async function sendMessage() {
-    const input = document.getElementById('input');
-    const apiKey = document.getElementById('apiKey').value.trim();
+    const input = document.getElementById('userInput');
     const text = input.value.trim();
-
     if (!text) return;
-
-    if (!apiKey.startsWith('gsk_')) {
-      alert('Please paste your free Groq API key (starts with gsk_) in the bar at the top.\n\nGet one free at: console.groq.com');
-      return;
-    }
 
     const btn = document.getElementById('sendBtn');
     btn.disabled = true;
     input.value = '';
     input.style.height = 'auto';
 
-    addMessage('user', text);
+    addUserMessage(text);
     addTyping();
 
-    const systemPrompt = `You are an experienced Agile coach with 10+ years in software teams.
-
-When given sprint data, respond using EXACTLY this format:
-
-🔴 TOP PROBLEMS
-- [problem 1]
-- [problem 2]
-- [problem 3]
-
-🔄 RETROSPECTIVE
-Start: [what to start doing]
-Stop: [what to stop doing]
-Continue: [what to keep doing]
-
-💡 NEXT SPRINT TIP
-[one specific actionable tip in 2-3 sentences]
-
-❤️ HEALTH SCORE: [number]/10
-[one sentence reason]
-
-RULES:
-- Never use ## markdown headers
-- Never use ** bold markers
-- Always use the exact emoji headers shown above
-- Be specific and direct, never generic`;
-
     try {
-      const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      const response = await fetch('/api/chat', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + apiKey
-        },
-        body: JSON.stringify({
-          model: 'llama-3.3-70b-versatile',
-          max_tokens: 1000,
-          messages: [
-            { role: 'system', content: systemPrompt },
-            { role: 'user',   content: text }
-          ]
-        })
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: text })
       });
 
       const data = await response.json();
-
-      if (data.error) {
-        throw new Error(data.error.message);
-      }
-
-      const reply = data.choices[0].message.content;
       removeTyping();
-      addMessage('bot', reply);
+
+      if (data.error) throw new Error(data.error);
+      addBotMessage(data.reply);
 
     } catch (err) {
       removeTyping();
-      addMessage('bot', '⚠️ Error: ' + err.message + '\n\nMake sure your Groq API key is correct and try again.');
+      addBotMessage('⚠️ Something went wrong: ' + err.message + '\n\nPlease try again in a moment.');
     }
 
     btn.disabled = false;
