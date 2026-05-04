@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Agile Coach AI — Your Sprint's Best Friend</title>
+<title>Agile Coach AI</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,900;1,900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
   :root {
@@ -15,7 +15,6 @@
   html,body{height:100%;overflow:hidden;}
   body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;display:flex;flex-direction:column;}
 
-  /* Header */
   header{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:13px 26px;background:var(--surface);border-bottom:2px solid var(--text);z-index:10;}
   .logo{display:flex;align-items:center;gap:12px;}
   .logo-mark{width:36px;height:36px;background:var(--text);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;}
@@ -26,11 +25,10 @@
   .pill-green{background:#d8f3dc;color:var(--accent);border-color:var(--accent);}
   .pill-dark{background:var(--text);color:var(--bg);border-color:var(--text);}
 
-  /* Layout */
   .layout{flex:1;display:flex;overflow:hidden;min-height:0;}
 
   /* Sidebar */
-  .sidebar{width:234px;flex-shrink:0;border-right:2px solid var(--border);background:var(--surface);display:flex;flex-direction:column;overflow-y:auto;padding:14px 11px;gap:5px;}
+  .sidebar{width:230px;flex-shrink:0;border-right:2px solid var(--border);background:var(--surface);display:flex;flex-direction:column;overflow-y:auto;padding:14px 11px;gap:5px;}
   .sidebar::-webkit-scrollbar{width:3px;}
   .sidebar::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
   .slabel{font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);font-family:'DM Mono',monospace;padding:4px 7px 2px;margin-top:6px;}
@@ -44,42 +42,49 @@
   /* Chat column */
   .chat-col{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0;}
 
-  /* Welcome screen — centred, takes all space above input */
+  /* Welcome */
   .welcome{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 28px 0;text-align:center;gap:12px;min-height:0;}
   .w-icon{width:66px;height:66px;background:var(--text);border-radius:17px;display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:5px 5px 0 var(--accent);}
   .welcome h2{font-family:'Fraunces',serif;font-size:27px;font-weight:900;letter-spacing:-0.04em;line-height:1.1;}
   .welcome h2 em{color:var(--accent2);font-style:italic;}
-  .welcome p{color:var(--text2);font-size:13px;max-width:360px;line-height:1.65;}
+  .welcome p{color:var(--text2);font-size:13px;max-width:380px;line-height:1.65;}
   .chips{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;}
   .chip{background:var(--surface);border:1.5px solid var(--border);border-radius:8px;padding:6px 13px;font-size:12px;font-weight:500;color:var(--text2);cursor:pointer;transition:all .15s;}
   .chip:hover{border-color:var(--accent);color:var(--accent);background:#d8f3dc;}
 
   /* Messages */
-  .msgs{flex:1;overflow-y:auto;padding:22px 30px;display:flex;flex-direction:column;gap:18px;min-height:0;}
+  .msgs{flex:1;overflow-y:auto;padding:22px 30px;display:none;flex-direction:column;gap:18px;min-height:0;}
   .msgs::-webkit-scrollbar{width:4px;}
   .msgs::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
   @keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
   .msg{display:flex;gap:10px;animation:fadeUp .25s ease;}
   .msg.user{flex-direction:row-reverse;align-self:flex-end;max-width:560px;}
-  .msg.bot{align-self:flex-start;max-width:640px;}
+  .msg.bot{align-self:flex-start;max-width:660px;}
   .av{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;border:1.5px solid var(--border);}
   .av-bot{background:var(--text);border-color:var(--text);}
   .av-user{background:var(--surface2);}
-  .bbl{padding:11px 15px;border-radius:12px;font-size:13px;line-height:1.7;border:1.5px solid;}
+  .bbl{padding:11px 15px;border-radius:12px;font-size:13px;line-height:1.75;border:1.5px solid;}
   .bbl-user{background:var(--text);border-color:var(--text);color:var(--bg);border-top-right-radius:3px;}
   .bbl-bot{background:var(--surface);border-color:var(--border);color:var(--text);border-top-left-radius:3px;box-shadow:var(--shadow);}
-  .sblock{margin-bottom:13px;padding-bottom:13px;border-bottom:1px dashed var(--border);}
-  .sblock:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none;}
-  .shead{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.09em;text-transform:uppercase;margin-bottom:6px;}
-  .sbody{font-size:13px;color:var(--text2);line-height:1.8;white-space:pre-wrap;}
-  .hpill{display:inline-flex;align-items:center;gap:5px;background:#d8f3dc;border:1.5px solid var(--accent);border-radius:20px;padding:3px 11px;font-family:'DM Mono',monospace;font-size:12px;color:var(--accent);font-weight:500;margin-bottom:5px;}
+
+  /* Rich text formatting for bot replies */
+  .bbl-bot p{margin-bottom:8px;}
+  .bbl-bot p:last-child{margin-bottom:0;}
+  .bbl-bot ul,.bbl-bot ol{padding-left:18px;margin:6px 0 10px;}
+  .bbl-bot li{margin-bottom:4px;line-height:1.7;}
+  .bbl-bot strong{font-weight:600;color:var(--text);}
+  .bbl-bot h3{font-size:13px;font-weight:700;margin:12px 0 5px;color:var(--text);font-family:'DM Mono',monospace;letter-spacing:.04em;text-transform:uppercase;}
+  .bbl-bot h3:first-child{margin-top:0;}
+  .bbl-bot .sec-divider{height:1px;background:var(--border);margin:10px 0;}
+  .hpill{display:inline-flex;align-items:center;gap:5px;background:#d8f3dc;border:1.5px solid var(--accent);border-radius:20px;padding:3px 11px;font-family:'DM Mono',monospace;font-size:12px;color:var(--accent);font-weight:500;margin:4px 0;}
+
   .typing{display:flex;align-items:center;gap:5px;}
   .tdot{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:bnc 1.2s infinite;}
   .tdot:nth-child(2){animation-delay:.2s;}
   .tdot:nth-child(3){animation-delay:.4s;}
   @keyframes bnc{0%,60%,100%{transform:translateY(0);opacity:.3;}30%{transform:translateY(-7px);opacity:1;}}
 
-  /* Input bar — always pinned at bottom */
+  /* Input bar */
   .input-bar{flex-shrink:0;padding:13px 26px 18px;background:var(--surface);border-top:2px solid var(--border);}
   .input-wrap{background:var(--bg);border:2px solid var(--border);border-radius:var(--radius);display:flex;flex-direction:column;transition:border-color .2s,box-shadow .2s;overflow:hidden;max-width:740px;margin:0 auto;}
   .input-wrap:focus-within{border-color:var(--accent);box-shadow:4px 4px 0 var(--accent);}
@@ -114,45 +119,46 @@
 <div class="layout">
 
   <div class="sidebar">
-    <div class="slabel">Try an example</div>
-    <button class="ex-btn" onclick="loadEx(0)"><strong>🔴 Velocity dropped</strong>Sprint 12. Down 30%. 4 stories carried over. Team felt blocked.</button>
-    <button class="ex-btn" onclick="loadEx(1)"><strong>⚠️ QA keeps getting skipped</strong>Skipped twice. Technical debt growing fast.</button>
-    <button class="ex-btn" onclick="loadEx(2)"><strong>😤 Team conflict</strong>Devs arguing on architecture. Standups 30+ mins.</button>
-    <button class="ex-btn" onclick="loadEx(3)"><strong>✅ Great sprint — what next?</strong>Best sprint yet. Velocity 42, all stories done.</button>
-    <button class="ex-btn" onclick="loadEx(4)"><strong>🆕 New team member joined</strong>Junior dev joined mid-sprint. How to onboard well?</button>
+    <div class="slabel">Sprint coaching</div>
+    <button class="ex-btn" onclick="loadEx(0)"><strong>🔴 Velocity dropped</strong>Sprint 12. Down 30%. Stories carried over. Team blocked.</button>
+    <button class="ex-btn" onclick="loadEx(1)"><strong>⚠️ QA keeps getting skipped</strong>Skipped twice. Technical debt growing.</button>
+    <button class="ex-btn" onclick="loadEx(2)"><strong>😤 Team conflict</strong>Devs arguing. Standups 30+ mins. Morale low.</button>
+    <button class="ex-btn" onclick="loadEx(3)"><strong>✅ Great sprint — what next?</strong>Best sprint yet. How to keep it up?</button>
+
     <div class="sdiv"></div>
-    <div class="slabel">Include in your message</div>
-    <div class="ex-btn" style="cursor:default;pointer-events:none;">📊 <strong>Velocity numbers</strong>Planned vs actual points</div>
-    <div class="ex-btn" style="cursor:default;pointer-events:none;">🚧 <strong>Blockers</strong>What slowed the team</div>
-    <div class="ex-btn" style="cursor:default;pointer-events:none;">😊 <strong>Team mood</strong>How the team felt overall</div>
-    <div class="stip"><strong>💡 Better input = better coaching</strong>The more detail you share, the more specific the advice. Numbers help!</div>
+    <div class="slabel">Ask anything</div>
+    <button class="ex-btn" onclick="loadEx(4)"><strong>📖 What is velocity?</strong>Explain it simply</button>
+    <button class="ex-btn" onclick="loadEx(5)"><strong>🔄 Scrum vs Kanban</strong>Which should my team use?</button>
+    <button class="ex-btn" onclick="loadEx(6)"><strong>📏 Story point tips</strong>Our estimates are always wrong</button>
+    <button class="ex-btn" onclick="loadEx(7)"><strong>🚗 Agile + ASPICE</strong>How do they work together?</button>
+    <button class="ex-btn" onclick="loadEx(8)"><strong>🧑‍💼 Bad Scrum Master</strong>Our SM just runs standups</button>
+
+    <div class="sdiv"></div>
+    <div class="stip"><strong>💡 Ask anything Agile</strong>Sprint coaching, Scrum questions, Kanban, story points, team dynamics — just ask naturally.</div>
   </div>
 
   <div class="chat-col">
 
-    <!-- Welcome — visible on load -->
     <div class="welcome" id="welcomeWrap">
       <div class="w-icon">🏃</div>
-      <h2>Your sprint's<br><em>honest coach</em></h2>
-      <p>Describe your sprint below and get instant coaching — problems identified, retrospective written, and a health score. No fluff.</p>
+      <h2>Your Agile<br><em>expert coach</em></h2>
+      <p>Ask me anything about Agile — sprint coaching, Scrum, Kanban, story points, team problems, or paste your sprint data for a full review.</p>
       <div class="chips">
-        <div class="chip" onclick="loadEx(0)">Velocity dropped</div>
-        <div class="chip" onclick="loadEx(1)">QA skipped</div>
-        <div class="chip" onclick="loadEx(2)">Team conflict</div>
-        <div class="chip" onclick="loadEx(3)">Great sprint</div>
+        <div class="chip" onclick="loadEx(0)">Coach my sprint</div>
+        <div class="chip" onclick="loadEx(4)">What is velocity?</div>
+        <div class="chip" onclick="loadEx(5)">Scrum vs Kanban</div>
+        <div class="chip" onclick="loadEx(7)">Agile + ASPICE</div>
       </div>
     </div>
 
-    <!-- Messages — hidden on load -->
-    <div class="msgs" id="msgs" style="display:none;"></div>
+    <div class="msgs" id="msgs"></div>
 
-    <!-- Input ALWAYS visible at bottom -->
     <div class="input-bar">
       <div class="input-wrap">
-        <textarea id="ta" placeholder="Describe your sprint... e.g. Sprint 12 ended. Velocity dropped from 42 to 28. 4 stories carried over. Team felt blocked by unclear requirements. QA was skipped again." rows="2" onkeydown="handleKey(event)" oninput="resize(this)"></textarea>
+        <textarea id="ta" placeholder="Ask me anything about Agile, Scrum, Kanban, story points, team problems... or paste your sprint summary for coaching." rows="2" onkeydown="handleKey(event)" oninput="resize(this)"></textarea>
         <div class="ifoot">
           <span class="ihint">Enter to send · Shift+Enter for new line</span>
-          <button class="sbtn" id="sbtn" onclick="send()">Coach me ↑</button>
+          <button class="sbtn" id="sbtn" onclick="send()">Ask ↑</button>
         </div>
       </div>
     </div>
@@ -163,22 +169,48 @@
 <script>
 const EX=[
   "Sprint 12 just ended. Velocity dropped from 42 to 28 points. 4 stories were carried over. The team felt blocked — unclear requirements from the product owner. QA was skipped twice due to time pressure. The demo went okay but stakeholders had unanswered questions.",
-  "We finished Sprint 8. Velocity was 36 but QA has been skipped in the last 2 sprints due to time pressure. Technical debt is growing and the team is starting to complain about quality.",
+  "We finished Sprint 8. Velocity was 36 but QA has been skipped in the last 2 sprints due to time pressure. Technical debt is growing and the team is complaining about quality.",
   "Sprint 6 done. Two senior developers have been disagreeing on architecture for 3 weeks. Standups run 30+ minutes. The team is disengaged. Velocity is 38 but morale is visibly low.",
-  "Sprint 10 was our best yet. Velocity hit 42, all stories completed, no carryover. Stakeholder demo got great feedback. One junior dev delivered their first solo feature. How do we maintain this?",
-  "A junior developer joined mid-Sprint 9. Velocity dipped from 38 to 32 as seniors spent time onboarding. The new member is eager but struggling with the codebase. How do we onboard without hurting velocity?"
+  "Sprint 10 was our best yet. Velocity hit 42, all stories completed, no carryover. Stakeholder demo got great feedback. One junior dev delivered their first solo feature. How do we maintain this momentum?",
+  "Can you explain what velocity means in Scrum? How do we measure it and what is a good velocity for a team of 5 developers?",
+  "What is the difference between Scrum and Kanban? My team is a small 4-person dev team working on a web product. Which should we use?",
+  "Our team's story point estimates are almost always wrong. We consistently underestimate and then miss the sprint goal. What are we doing wrong and how do we fix it?",
+  "We work in the automotive industry and need to be ASPICE compliant. How does Agile work with Automotive SPICE? Are they compatible?",
+  "Our Scrum Master basically just runs the daily standup and books the sprint ceremonies. They do not coach the team, remove blockers or challenge the process. What should a good Scrum Master actually be doing?"
 ];
 
-function loadEx(i){const ta=document.getElementById('ta');ta.value=EX[i];resize(ta);ta.focus();}
-function resize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,130)+'px';}
-function handleKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();}}
+// Conversation history for memory
+let history = [];
+
+function loadEx(i){
+  const ta=document.getElementById('ta');
+  ta.value=EX[i];
+  resize(ta);
+  ta.focus();
+}
+
+function resize(el){
+  el.style.height='auto';
+  el.style.height=Math.min(el.scrollHeight,130)+'px';
+}
+
+function handleKey(e){
+  if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();}
+}
 
 function showMsgs(){
   const w=document.getElementById('welcomeWrap');
   const m=document.getElementById('msgs');
-  if(w.style.display!=='none'){w.style.display='none';m.style.display='flex';}
+  if(w.style.display!=='none'){
+    w.style.display='none';
+    m.style.display='flex';
+  }
 }
-function scrollBot(){const m=document.getElementById('msgs');m.scrollTop=m.scrollHeight;}
+
+function scrollBot(){
+  const m=document.getElementById('msgs');
+  m.scrollTop=m.scrollHeight;
+}
 
 function addUser(text){
   showMsgs();
@@ -186,7 +218,8 @@ function addUser(text){
   const d=document.createElement('div');
   d.className='msg user';
   d.innerHTML=`<div class="av av-user">👤</div><div class="bbl bbl-user">${text.replace(/\n/g,'<br>')}</div>`;
-  m.appendChild(d);scrollBot();
+  m.appendChild(d);
+  scrollBot();
 }
 
 function addTyping(){
@@ -197,32 +230,41 @@ function addTyping(){
   d.innerHTML=`<div class="av av-bot">🤖</div><div class="bbl bbl-bot"><div class="typing"><div class="tdot"></div><div class="tdot"></div><div class="tdot"></div></div></div>`;
   m.appendChild(d);scrollBot();
 }
-function removeTyping(){const t=document.getElementById('typing');if(t)t.remove();}
 
+function removeTyping(){
+  const t=document.getElementById('typing');
+  if(t)t.remove();
+}
+
+// Convert markdown-like text to clean HTML
 function fmt(text){
-  const defs=[
-    {key:'TOP PROBLEMS',emoji:'🔴',color:'#c0392b'},
-    {key:'RETROSPECTIVE',emoji:'🔄',color:'#457b9d'},
-    {key:'NEXT SPRINT TIP',emoji:'💡',color:'#e76f51'},
-    {key:'HEALTH SCORE',emoji:'❤️',color:'#2d6a4f'},
-  ];
-  const rx=/(?:🔴|🔄|💡|❤️)?\s*(?:TOP PROBLEMS|RETROSPECTIVE|NEXT SPRINT TIP|HEALTH SCORE[:\s\d\/]*)/gi;
-  const headers=text.match(rx)||[];
-  const parts=text.split(rx);
-  if(!headers.length)return`<div class="sbody">${text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'$1')}</div>`;
-  return headers.map((h,i)=>{
-    const content=(parts[i+1]||'').trim().replace(/^[:：\-\s]+/,'').replace(/\*\*(.*?)\*\*/g,'$1').replace(/#{1,6}\s*/g,'');
-    const def=defs.find(d=>h.toUpperCase().includes(d.key));
-    const emoji=def?def.emoji:'📌';
-    const label=def?def.key:h.trim();
-    const color=def?def.color:'#333';
-    const isH=label==='HEALTH SCORE';
-    const sm=content.match(/(\d+)\s*\/\s*10/);
-    let inner=isH&&sm
-      ?`<div class="hpill">Score ${sm[0]}</div>${content.replace(/\d+\s*\/\s*10\s*[-–:.]?\s*/,'').trim()?`<div class="sbody" style="margin-top:5px;">${content.replace(/\d+\s*\/\s*10\s*[-–:.]?\s*/,'').trim().replace(/\n/g,'<br>')}</div>`:''}`
-      :`<div class="sbody">${content.replace(/\n/g,'<br>')}</div>`;
-    return`<div class="sblock"><div class="shead" style="color:${color}">${emoji} ${label}</div>${inner}</div>`;
+  let html = text
+    // Bold
+    .replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')
+    // Headers ## and ###
+    .replace(/^###\s+(.+)$/gm,'<h3>$1</h3>')
+    .replace(/^##\s+(.+)$/gm,'<h3>$1</h3>')
+    // Health score pill
+    .replace(/❤️\s*HEALTH SCORE[:\s]*(\d+\/10|\d+\s*\/\s*10)/gi,'<div class="hpill">❤️ Health Score $1</div>')
+    // Horizontal rules
+    .replace(/^---+$/gm,'<div class="sec-divider"></div>')
+    // Bullet points
+    .replace(/^[\*\-]\s+(.+)$/gm,'<li>$1</li>')
+    // Numbered lists
+    .replace(/^\d+\.\s+(.+)$/gm,'<li>$1</li>');
+
+  // Wrap consecutive <li> in <ul>
+  html = html.replace(/(<li>.*<\/li>\n?)+/gs, match => `<ul>${match}</ul>`);
+
+  // Wrap plain paragraphs
+  html = html.split('\n\n').map(block => {
+    block = block.trim();
+    if(!block) return '';
+    if(block.startsWith('<')) return block;
+    return `<p>${block.replace(/\n/g,'<br>')}</p>`;
   }).join('');
+
+  return html;
 }
 
 function addBot(text){
@@ -230,28 +272,51 @@ function addBot(text){
   const d=document.createElement('div');
   d.className='msg bot';
   d.innerHTML=`<div class="av av-bot">🤖</div><div class="bbl bbl-bot">${fmt(text)}</div>`;
-  m.appendChild(d);scrollBot();
+  m.appendChild(d);
+  scrollBot();
 }
 
 async function send(){
   const ta=document.getElementById('ta');
   const text=ta.value.trim();
   if(!text)return;
+
   const btn=document.getElementById('sbtn');
   btn.disabled=true;
-  ta.value='';ta.style.height='auto';
-  addUser(text);addTyping();
+  ta.value='';
+  ta.style.height='auto';
+
+  addUser(text);
+  addTyping();
+
+  // Add user message to history
+  history.push({role:'user', content:text});
+
   try{
-    const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:text})});
+    const res=await fetch('/api/chat',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        message: text,
+        history: history.slice(-10) // send last 10 messages for context
+      })
+    });
     const data=await res.json();
     removeTyping();
     if(data.error)throw new Error(data.error);
+
+    // Add bot reply to history
+    history.push({role:'assistant', content:data.reply});
+
     addBot(data.reply);
   }catch(err){
     removeTyping();
+    history.pop(); // remove failed user message from history
     addBot('⚠️ Something went wrong: '+err.message+'\n\nPlease try again.');
   }
-  btn.disabled=false;ta.focus();
+
+  btn.disabled=false;
+  ta.focus();
 }
 </script>
 </body>
