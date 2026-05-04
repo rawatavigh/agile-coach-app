@@ -4,426 +4,95 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Agile Coach AI — Your Sprint's Best Friend</title>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;0,900;1,300&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,900;1,900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
   :root {
-    --bg: #f5f0e8;
-    --surface: #fffdf7;
-    --surface2: #f0ebe0;
-    --border: #ddd8cc;
-    --accent: #2d6a4f;
-    --accent2: #e76f51;
-    --accent3: #457b9d;
-    --text: #1a1a2e;
-    --text2: #5a5a72;
-    --text3: #9a9aaa;
-    --radius: 14px;
-    --shadow: 0 2px 20px rgba(0,0,0,0.08);
+    --bg:#f5f0e8;--surface:#fffdf7;--surface2:#ede8dc;--border:#d8d3c8;
+    --accent:#2d6a4f;--accent2:#e76f51;--text:#1a1a2e;--text2:#5a5a72;--text3:#aaa8b8;
+    --radius:14px;--shadow:0 2px 16px rgba(0,0,0,0.07);
   }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-  }
-
-  /* Subtle paper texture */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%23f5f0e8'/%3E%3Ccircle cx='1' cy='1' r='0.5' fill='%23e8e3d8' opacity='0.5'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 0;
-  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{height:100%;overflow:hidden;}
+  body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;display:flex;flex-direction:column;}
 
   /* Header */
-  header {
-    position: relative;
-    z-index: 10;
-    padding: 16px 28px;
-    background: var(--surface);
-    border-bottom: 2px solid var(--text);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-shrink: 0;
-    box-shadow: var(--shadow);
-  }
-
-  .logo { display: flex; align-items: center; gap: 14px; }
-
-  .logo-mark {
-    width: 42px; height: 42px;
-    background: var(--text);
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 20px;
-  }
-
-  .logo-text {
-    font-family: 'Fraunces', serif;
-    font-size: 22px;
-    font-weight: 900;
-    letter-spacing: -0.04em;
-    line-height: 1;
-  }
-  .logo-sub {
-    font-size: 11px;
-    color: var(--text2);
-    font-weight: 400;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    margin-top: 2px;
-    font-family: 'DM Mono', monospace;
-  }
-
-  .header-right { display: flex; gap: 8px; align-items: center; }
-  .pill {
-    font-size: 11px;
-    font-weight: 600;
-    padding: 5px 12px;
-    border-radius: 20px;
-    font-family: 'DM Mono', monospace;
-    border: 1.5px solid;
-  }
-  .pill-green { background: #d8f3dc; color: var(--accent); border-color: var(--accent); }
-  .pill-dark { background: var(--text); color: var(--bg); border-color: var(--text); }
+  header{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:13px 26px;background:var(--surface);border-bottom:2px solid var(--text);z-index:10;}
+  .logo{display:flex;align-items:center;gap:12px;}
+  .logo-mark{width:36px;height:36px;background:var(--text);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;}
+  .logo-text{font-family:'Fraunces',serif;font-size:19px;font-weight:900;letter-spacing:-0.04em;line-height:1;}
+  .logo-sub{font-size:10px;color:var(--text2);letter-spacing:.05em;text-transform:uppercase;font-family:'DM Mono',monospace;margin-top:2px;}
+  .pills{display:flex;gap:8px;}
+  .pill{font-size:11px;font-weight:600;padding:4px 11px;border-radius:20px;border:1.5px solid;font-family:'DM Mono',monospace;}
+  .pill-green{background:#d8f3dc;color:var(--accent);border-color:var(--accent);}
+  .pill-dark{background:var(--text);color:var(--bg);border-color:var(--text);}
 
   /* Layout */
-  .layout {
-    display: flex;
-    flex: 1;
-    overflow: hidden;
-    position: relative;
-    z-index: 1;
-  }
+  .layout{flex:1;display:flex;overflow:hidden;min-height:0;}
 
   /* Sidebar */
-  .sidebar {
-    width: 260px;
-    flex-shrink: 0;
-    border-right: 2px solid var(--border);
-    padding: 20px 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    overflow-y: auto;
-    background: var(--surface);
-  }
+  .sidebar{width:234px;flex-shrink:0;border-right:2px solid var(--border);background:var(--surface);display:flex;flex-direction:column;overflow-y:auto;padding:14px 11px;gap:5px;}
+  .sidebar::-webkit-scrollbar{width:3px;}
+  .sidebar::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+  .slabel{font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);font-family:'DM Mono',monospace;padding:4px 7px 2px;margin-top:6px;}
+  .ex-btn{background:transparent;border:1.5px solid var(--border);border-radius:9px;padding:8px 10px;cursor:pointer;text-align:left;font-family:'DM Sans',sans-serif;font-size:11px;color:var(--text2);line-height:1.45;transition:all .15s;}
+  .ex-btn:hover{background:var(--surface2);border-color:var(--accent);color:var(--text);transform:translateX(2px);}
+  .ex-btn strong{display:block;font-size:11px;color:var(--text);margin-bottom:2px;font-weight:600;}
+  .sdiv{height:1.5px;background:var(--border);margin:5px 0;}
+  .stip{margin-top:auto;padding:9px 11px;background:#d8f3dc;border:1.5px solid var(--accent);border-radius:9px;font-size:11px;color:var(--accent);line-height:1.5;}
+  .stip strong{display:block;margin-bottom:2px;}
 
-  .sidebar-title {
-    font-size: 10px;
-    font-weight: 600;
-    color: var(--text3);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 0 8px;
-    margin: 8px 0 4px;
-    font-family: 'DM Mono', monospace;
-  }
+  /* Chat column */
+  .chat-col{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0;}
 
-  .example-btn {
-    background: transparent;
-    border: 1.5px solid var(--border);
-    border-radius: 10px;
-    padding: 10px 12px;
-    cursor: pointer;
-    text-align: left;
-    transition: all 0.18s;
-    color: var(--text2);
-    font-size: 12px;
-    line-height: 1.5;
-    font-family: 'DM Sans', sans-serif;
-  }
-  .example-btn:hover {
-    background: var(--surface2);
-    border-color: var(--accent);
-    color: var(--text);
-    transform: translateX(3px);
-  }
-  .example-btn strong {
-    display: block;
-    color: var(--text);
-    font-size: 12px;
-    margin-bottom: 2px;
-    font-weight: 600;
-  }
-
-  .sidebar-divider { height: 1.5px; background: var(--border); margin: 10px 0; }
-
-  .sidebar-tip {
-    margin-top: auto;
-    padding: 12px 14px;
-    background: #d8f3dc;
-    border: 1.5px solid var(--accent);
-    border-radius: 10px;
-    font-size: 11px;
-    color: var(--accent);
-    line-height: 1.6;
-  }
-  .sidebar-tip strong { display: block; font-size: 12px; margin-bottom: 3px; }
-
-  /* Chat */
-  .chat-area {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-  }
-
-  .messages {
-    flex: 1;
-    overflow-y: auto;
-    padding: 32px 36px;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    scroll-behavior: smooth;
-  }
-  .messages::-webkit-scrollbar { width: 5px; }
-  .messages::-webkit-scrollbar-track { background: transparent; }
-  .messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
-
-  /* Welcome */
-  .welcome {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 40px;
-    gap: 14px;
-    animation: fadeUp 0.5s ease;
-  }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .welcome-icon {
-    width: 80px; height: 80px;
-    background: var(--text);
-    border-radius: 20px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 36px;
-    box-shadow: 6px 6px 0 var(--accent);
-    margin-bottom: 8px;
-  }
-
-  .welcome h2 {
-    font-family: 'Fraunces', serif;
-    font-size: 32px;
-    font-weight: 900;
-    letter-spacing: -0.04em;
-    line-height: 1.1;
-  }
-  .welcome h2 em { color: var(--accent2); font-style: italic; }
-
-  .welcome p {
-    color: var(--text2);
-    font-size: 15px;
-    max-width: 400px;
-    line-height: 1.7;
-  }
-
-  .welcome-chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    justify-content: center;
-    margin-top: 8px;
-  }
-  .chip {
-    background: var(--surface);
-    border: 1.5px solid var(--border);
-    border-radius: 8px;
-    padding: 7px 14px;
-    font-size: 13px;
-    color: var(--text2);
-    cursor: pointer;
-    transition: all 0.18s;
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 500;
-  }
-  .chip:hover { border-color: var(--accent); color: var(--accent); background: #d8f3dc; }
+  /* Welcome screen — centred, takes all space above input */
+  .welcome{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 28px 0;text-align:center;gap:12px;min-height:0;}
+  .w-icon{width:66px;height:66px;background:var(--text);border-radius:17px;display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:5px 5px 0 var(--accent);}
+  .welcome h2{font-family:'Fraunces',serif;font-size:27px;font-weight:900;letter-spacing:-0.04em;line-height:1.1;}
+  .welcome h2 em{color:var(--accent2);font-style:italic;}
+  .welcome p{color:var(--text2);font-size:13px;max-width:360px;line-height:1.65;}
+  .chips{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;}
+  .chip{background:var(--surface);border:1.5px solid var(--border);border-radius:8px;padding:6px 13px;font-size:12px;font-weight:500;color:var(--text2);cursor:pointer;transition:all .15s;}
+  .chip:hover{border-color:var(--accent);color:var(--accent);background:#d8f3dc;}
 
   /* Messages */
-  .message { display: flex; gap: 12px; animation: fadeUp 0.3s ease; }
-  .message.user { flex-direction: row-reverse; align-self: flex-end; max-width: 600px; }
-  .message.bot { align-self: flex-start; max-width: 680px; }
+  .msgs{flex:1;overflow-y:auto;padding:22px 30px;display:flex;flex-direction:column;gap:18px;min-height:0;}
+  .msgs::-webkit-scrollbar{width:4px;}
+  .msgs::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+  .msg{display:flex;gap:10px;animation:fadeUp .25s ease;}
+  .msg.user{flex-direction:row-reverse;align-self:flex-end;max-width:560px;}
+  .msg.bot{align-self:flex-start;max-width:640px;}
+  .av{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;border:1.5px solid var(--border);}
+  .av-bot{background:var(--text);border-color:var(--text);}
+  .av-user{background:var(--surface2);}
+  .bbl{padding:11px 15px;border-radius:12px;font-size:13px;line-height:1.7;border:1.5px solid;}
+  .bbl-user{background:var(--text);border-color:var(--text);color:var(--bg);border-top-right-radius:3px;}
+  .bbl-bot{background:var(--surface);border-color:var(--border);color:var(--text);border-top-left-radius:3px;box-shadow:var(--shadow);}
+  .sblock{margin-bottom:13px;padding-bottom:13px;border-bottom:1px dashed var(--border);}
+  .sblock:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none;}
+  .shead{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.09em;text-transform:uppercase;margin-bottom:6px;}
+  .sbody{font-size:13px;color:var(--text2);line-height:1.8;white-space:pre-wrap;}
+  .hpill{display:inline-flex;align-items:center;gap:5px;background:#d8f3dc;border:1.5px solid var(--accent);border-radius:20px;padding:3px 11px;font-family:'DM Mono',monospace;font-size:12px;color:var(--accent);font-weight:500;margin-bottom:5px;}
+  .typing{display:flex;align-items:center;gap:5px;}
+  .tdot{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:bnc 1.2s infinite;}
+  .tdot:nth-child(2){animation-delay:.2s;}
+  .tdot:nth-child(3){animation-delay:.4s;}
+  @keyframes bnc{0%,60%,100%{transform:translateY(0);opacity:.3;}30%{transform:translateY(-7px);opacity:1;}}
 
-  .avatar {
-    width: 36px; height: 36px;
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 16px;
-    flex-shrink: 0;
-    border: 1.5px solid var(--border);
-  }
-  .avatar-bot { background: var(--text); border-color: var(--text); }
-  .avatar-user { background: var(--surface2); }
+  /* Input bar — always pinned at bottom */
+  .input-bar{flex-shrink:0;padding:13px 26px 18px;background:var(--surface);border-top:2px solid var(--border);}
+  .input-wrap{background:var(--bg);border:2px solid var(--border);border-radius:var(--radius);display:flex;flex-direction:column;transition:border-color .2s,box-shadow .2s;overflow:hidden;max-width:740px;margin:0 auto;}
+  .input-wrap:focus-within{border-color:var(--accent);box-shadow:4px 4px 0 var(--accent);}
+  textarea{background:transparent;border:none;outline:none;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.6;resize:none;padding:13px 15px 7px;width:100%;min-height:52px;max-height:130px;}
+  textarea::placeholder{color:var(--text3);}
+  .ifoot{display:flex;align-items:center;justify-content:space-between;padding:5px 11px 9px;}
+  .ihint{font-size:11px;color:var(--text3);font-family:'DM Mono',monospace;}
+  .sbtn{background:var(--text);border:none;border-radius:8px;color:var(--bg);font-size:13px;font-weight:600;padding:8px 17px;cursor:pointer;display:flex;align-items:center;gap:5px;font-family:'DM Sans',sans-serif;transition:all .15s;box-shadow:3px 3px 0 var(--accent);}
+  .sbtn:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--accent);}
+  .sbtn:active{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--accent);}
+  .sbtn:disabled{opacity:.4;cursor:not-allowed;transform:none;}
 
-  .bubble {
-    padding: 14px 18px;
-    border-radius: 14px;
-    font-size: 14px;
-    line-height: 1.7;
-    border: 1.5px solid;
-  }
-  .bubble-user {
-    background: var(--text);
-    border-color: var(--text);
-    color: var(--bg);
-    border-top-right-radius: 4px;
-    font-weight: 400;
-  }
-  .bubble-bot {
-    background: var(--surface);
-    border-color: var(--border);
-    color: var(--text);
-    border-top-left-radius: 4px;
-    box-shadow: var(--shadow);
-  }
-
-  /* Bot sections */
-  .section-block { margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px dashed var(--border); }
-  .section-block:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
-
-  .section-heading {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    text-transform: uppercase;
-  }
-
-  .section-content {
-    font-size: 13px;
-    color: var(--text2);
-    line-height: 1.85;
-    white-space: pre-wrap;
-  }
-
-  .health-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: #d8f3dc;
-    border: 1.5px solid var(--accent);
-    border-radius: 20px;
-    padding: 4px 12px;
-    font-family: 'DM Mono', monospace;
-    font-size: 13px;
-    color: var(--accent);
-    font-weight: 500;
-    margin-bottom: 8px;
-  }
-
-  /* Typing */
-  .typing { display: flex; align-items: center; gap: 5px; padding: 4px 0; }
-  .typing-dot {
-    width: 7px; height: 7px;
-    border-radius: 50%;
-    background: var(--accent);
-    animation: typingBounce 1.2s infinite;
-  }
-  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
-  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
-  @keyframes typingBounce {
-    0%, 60%, 100% { transform: translateY(0); opacity: 0.3; }
-    30% { transform: translateY(-7px); opacity: 1; }
-  }
-
-  /* Input */
-  .input-area {
-    padding: 18px 36px 24px;
-    border-top: 2px solid var(--border);
-    background: var(--surface);
-    flex-shrink: 0;
-  }
-
-  .input-wrap {
-    background: var(--bg);
-    border: 2px solid var(--border);
-    border-radius: var(--radius);
-    display: flex;
-    flex-direction: column;
-    transition: border-color 0.2s, box-shadow 0.2s;
-    overflow: hidden;
-  }
-  .input-wrap:focus-within {
-    border-color: var(--accent);
-    box-shadow: 4px 4px 0 var(--accent);
-  }
-
-  textarea {
-    background: transparent;
-    border: none;
-    outline: none;
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    line-height: 1.6;
-    resize: none;
-    padding: 16px 18px 8px;
-    width: 100%;
-    min-height: 64px;
-    max-height: 140px;
-  }
-  textarea::placeholder { color: var(--text3); }
-
-  .input-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 8px 14px 12px;
-  }
-
-  .input-hint {
-    font-size: 11px;
-    color: var(--text3);
-    font-family: 'DM Mono', monospace;
-  }
-
-  .send-btn {
-    background: var(--text);
-    border: none;
-    border-radius: 10px;
-    color: var(--bg);
-    font-size: 13px;
-    font-weight: 600;
-    padding: 9px 20px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    font-family: 'DM Sans', sans-serif;
-    transition: all 0.18s;
-    box-shadow: 3px 3px 0 var(--accent);
-  }
-  .send-btn:hover { transform: translate(-1px, -1px); box-shadow: 4px 4px 0 var(--accent); }
-  .send-btn:active { transform: translate(1px, 1px); box-shadow: 2px 2px 0 var(--accent); }
-  .send-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: 3px 3px 0 var(--accent); }
-
-  @media (max-width: 640px) {
-    .sidebar { display: none; }
-    .messages { padding: 16px; }
-    .input-area { padding: 12px 16px 20px; }
-    header { padding: 12px 16px; }
-  }
+  @media(max-width:600px){.sidebar{display:none;}.input-bar{padding:10px 12px 14px;}header{padding:10px 14px;}.welcome{padding:16px 14px 0;}}
 </style>
 </head>
 <body>
@@ -432,275 +101,158 @@
   <div class="logo">
     <div class="logo-mark">🏃</div>
     <div>
-      <div class="logo-text">Agile Coach <em style="font-style:italic;color:#e76f51;">AI</em></div>
+      <div class="logo-text">Agile Coach <em style="color:var(--accent2);font-style:italic;">AI</em></div>
       <div class="logo-sub">Powered by Groq · Llama 3.3</div>
     </div>
   </div>
-  <div class="header-right">
+  <div class="pills">
     <div class="pill pill-green">● Live</div>
-    <div class="pill pill-dark">Free to use</div>
+    <div class="pill pill-dark">Free</div>
   </div>
 </header>
 
 <div class="layout">
 
   <div class="sidebar">
-    <div class="sidebar-title">Try an example</div>
-
-    <button class="example-btn" onclick="loadExample(0)">
-      <strong>🔴 Velocity dropped</strong>
-      Sprint 12 ended. Velocity down 30%. 4 stories carried over. Team felt blocked all week.
-    </button>
-
-    <button class="example-btn" onclick="loadExample(1)">
-      <strong>⚠️ QA keeps getting skipped</strong>
-      QA skipped twice due to time pressure. Technical debt growing fast.
-    </button>
-
-    <button class="example-btn" onclick="loadExample(2)">
-      <strong>😤 Team conflict</strong>
-      Two devs disagreeing on architecture. Standups running 30+ mins. Morale low.
-    </button>
-
-    <button class="example-btn" onclick="loadExample(3)">
-      <strong>✅ Great sprint — what next?</strong>
-      Best sprint yet. Velocity hit 42, all stories done. How do we keep this up?
-    </button>
-
-    <button class="example-btn" onclick="loadExample(4)">
-      <strong>🆕 New team member joined</strong>
-      Junior dev joined mid-sprint. Velocity dipped but team was supportive. How to onboard well?
-    </button>
-
-    <div class="sidebar-divider"></div>
-    <div class="sidebar-title">Include in your message</div>
-
-    <button class="example-btn" style="cursor:default; pointer-events:none;">
-      📊 <strong>Velocity numbers</strong>
-      Planned vs actual points
-    </button>
-    <button class="example-btn" style="cursor:default; pointer-events:none;">
-      🚧 <strong>Blockers</strong>
-      What slowed the team
-    </button>
-    <button class="example-btn" style="cursor:default; pointer-events:none;">
-      😊 <strong>Team mood</strong>
-      How the team felt overall
-    </button>
-
-    <div class="sidebar-tip">
-      <strong>💡 Better input = better coaching</strong>
-      The more detail you share, the more specific and useful the coaching gets. Numbers help!
-    </div>
+    <div class="slabel">Try an example</div>
+    <button class="ex-btn" onclick="loadEx(0)"><strong>🔴 Velocity dropped</strong>Sprint 12. Down 30%. 4 stories carried over. Team felt blocked.</button>
+    <button class="ex-btn" onclick="loadEx(1)"><strong>⚠️ QA keeps getting skipped</strong>Skipped twice. Technical debt growing fast.</button>
+    <button class="ex-btn" onclick="loadEx(2)"><strong>😤 Team conflict</strong>Devs arguing on architecture. Standups 30+ mins.</button>
+    <button class="ex-btn" onclick="loadEx(3)"><strong>✅ Great sprint — what next?</strong>Best sprint yet. Velocity 42, all stories done.</button>
+    <button class="ex-btn" onclick="loadEx(4)"><strong>🆕 New team member joined</strong>Junior dev joined mid-sprint. How to onboard well?</button>
+    <div class="sdiv"></div>
+    <div class="slabel">Include in your message</div>
+    <div class="ex-btn" style="cursor:default;pointer-events:none;">📊 <strong>Velocity numbers</strong>Planned vs actual points</div>
+    <div class="ex-btn" style="cursor:default;pointer-events:none;">🚧 <strong>Blockers</strong>What slowed the team</div>
+    <div class="ex-btn" style="cursor:default;pointer-events:none;">😊 <strong>Team mood</strong>How the team felt overall</div>
+    <div class="stip"><strong>💡 Better input = better coaching</strong>The more detail you share, the more specific the advice. Numbers help!</div>
   </div>
 
-  <div class="chat-area">
-    <div class="messages" id="messages">
-      <div class="welcome" id="welcome">
-        <div class="welcome-icon">🏃</div>
-        <h2>Your sprint's<br><em>honest coach</em></h2>
-        <p>Describe your sprint and get instant coaching — problems identified, retrospective written, and a health score. No fluff, no generic advice.</p>
-        <div class="welcome-chips">
-          <div class="chip" onclick="loadExample(0)">Velocity dropped</div>
-          <div class="chip" onclick="loadExample(1)">QA skipped</div>
-          <div class="chip" onclick="loadExample(2)">Team conflict</div>
-          <div class="chip" onclick="loadExample(3)">Great sprint</div>
-        </div>
+  <div class="chat-col">
+
+    <!-- Welcome — visible on load -->
+    <div class="welcome" id="welcomeWrap">
+      <div class="w-icon">🏃</div>
+      <h2>Your sprint's<br><em>honest coach</em></h2>
+      <p>Describe your sprint below and get instant coaching — problems identified, retrospective written, and a health score. No fluff.</p>
+      <div class="chips">
+        <div class="chip" onclick="loadEx(0)">Velocity dropped</div>
+        <div class="chip" onclick="loadEx(1)">QA skipped</div>
+        <div class="chip" onclick="loadEx(2)">Team conflict</div>
+        <div class="chip" onclick="loadEx(3)">Great sprint</div>
       </div>
     </div>
 
-    <div class="input-area">
+    <!-- Messages — hidden on load -->
+    <div class="msgs" id="msgs" style="display:none;"></div>
+
+    <!-- Input ALWAYS visible at bottom -->
+    <div class="input-bar">
       <div class="input-wrap">
-        <textarea id="userInput"
-          placeholder="Describe your sprint... e.g. Sprint 12 ended. Velocity dropped from 42 to 28. 4 stories carried over. Team felt blocked by unclear requirements. Demo went well but QA was skipped again."
-          rows="3"
-          onkeydown="handleKey(event)"
-          oninput="autoResize(this)"></textarea>
-        <div class="input-footer">
-          <span class="input-hint">Enter to send · Shift+Enter for new line</span>
-          <button class="send-btn" id="sendBtn" onclick="sendMessage()">
-            Coach me ↑
-          </button>
+        <textarea id="ta" placeholder="Describe your sprint... e.g. Sprint 12 ended. Velocity dropped from 42 to 28. 4 stories carried over. Team felt blocked by unclear requirements. QA was skipped again." rows="2" onkeydown="handleKey(event)" oninput="resize(this)"></textarea>
+        <div class="ifoot">
+          <span class="ihint">Enter to send · Shift+Enter for new line</span>
+          <button class="sbtn" id="sbtn" onclick="send()">Coach me ↑</button>
         </div>
       </div>
     </div>
-  </div>
 
+  </div>
 </div>
 
 <script>
-  const examples = [
-    "Sprint 12 just ended. Velocity dropped from 42 to 28 points. 4 stories were carried over to next sprint. The team said they felt blocked a lot — unclear requirements from the product owner. QA was skipped twice due to time pressure. The demo went okay but stakeholders had questions we couldn't answer.",
-    "We just finished Sprint 8. Velocity was okay at 36 points but QA has been skipped in the last 2 sprints because we keep running out of time. Technical debt is growing and the team is starting to complain. We are worried about the quality of what we're shipping.",
-    "Sprint 6 done. Two senior developers have been disagreeing on the architecture direction for 3 weeks. Standups are running over 30 minutes every day. The rest of the team is disengaged. Velocity is still okay at 38 points but morale is visibly low.",
-    "Sprint 10 was our best yet. Velocity hit 42 points, all stories were completed, no carryover. The team felt energised and the stakeholder demo received really positive feedback. One junior developer delivered their first solo feature. What should we focus on to maintain this momentum?",
-    "A new junior developer joined our team mid-Sprint 9. Velocity dipped slightly from 38 to 32 points as senior devs spent time onboarding them. The new team member seems eager but is struggling with the codebase. The rest of the team was supportive. How do we onboard well without hurting velocity?"
+const EX=[
+  "Sprint 12 just ended. Velocity dropped from 42 to 28 points. 4 stories were carried over. The team felt blocked — unclear requirements from the product owner. QA was skipped twice due to time pressure. The demo went okay but stakeholders had unanswered questions.",
+  "We finished Sprint 8. Velocity was 36 but QA has been skipped in the last 2 sprints due to time pressure. Technical debt is growing and the team is starting to complain about quality.",
+  "Sprint 6 done. Two senior developers have been disagreeing on architecture for 3 weeks. Standups run 30+ minutes. The team is disengaged. Velocity is 38 but morale is visibly low.",
+  "Sprint 10 was our best yet. Velocity hit 42, all stories completed, no carryover. Stakeholder demo got great feedback. One junior dev delivered their first solo feature. How do we maintain this?",
+  "A junior developer joined mid-Sprint 9. Velocity dipped from 38 to 32 as seniors spent time onboarding. The new member is eager but struggling with the codebase. How do we onboard without hurting velocity?"
+];
+
+function loadEx(i){const ta=document.getElementById('ta');ta.value=EX[i];resize(ta);ta.focus();}
+function resize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,130)+'px';}
+function handleKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();}}
+
+function showMsgs(){
+  const w=document.getElementById('welcomeWrap');
+  const m=document.getElementById('msgs');
+  if(w.style.display!=='none'){w.style.display='none';m.style.display='flex';}
+}
+function scrollBot(){const m=document.getElementById('msgs');m.scrollTop=m.scrollHeight;}
+
+function addUser(text){
+  showMsgs();
+  const m=document.getElementById('msgs');
+  const d=document.createElement('div');
+  d.className='msg user';
+  d.innerHTML=`<div class="av av-user">👤</div><div class="bbl bbl-user">${text.replace(/\n/g,'<br>')}</div>`;
+  m.appendChild(d);scrollBot();
+}
+
+function addTyping(){
+  showMsgs();
+  const m=document.getElementById('msgs');
+  const d=document.createElement('div');
+  d.className='msg bot';d.id='typing';
+  d.innerHTML=`<div class="av av-bot">🤖</div><div class="bbl bbl-bot"><div class="typing"><div class="tdot"></div><div class="tdot"></div><div class="tdot"></div></div></div>`;
+  m.appendChild(d);scrollBot();
+}
+function removeTyping(){const t=document.getElementById('typing');if(t)t.remove();}
+
+function fmt(text){
+  const defs=[
+    {key:'TOP PROBLEMS',emoji:'🔴',color:'#c0392b'},
+    {key:'RETROSPECTIVE',emoji:'🔄',color:'#457b9d'},
+    {key:'NEXT SPRINT TIP',emoji:'💡',color:'#e76f51'},
+    {key:'HEALTH SCORE',emoji:'❤️',color:'#2d6a4f'},
   ];
+  const rx=/(?:🔴|🔄|💡|❤️)?\s*(?:TOP PROBLEMS|RETROSPECTIVE|NEXT SPRINT TIP|HEALTH SCORE[:\s\d\/]*)/gi;
+  const headers=text.match(rx)||[];
+  const parts=text.split(rx);
+  if(!headers.length)return`<div class="sbody">${text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'$1')}</div>`;
+  return headers.map((h,i)=>{
+    const content=(parts[i+1]||'').trim().replace(/^[:：\-\s]+/,'').replace(/\*\*(.*?)\*\*/g,'$1').replace(/#{1,6}\s*/g,'');
+    const def=defs.find(d=>h.toUpperCase().includes(d.key));
+    const emoji=def?def.emoji:'📌';
+    const label=def?def.key:h.trim();
+    const color=def?def.color:'#333';
+    const isH=label==='HEALTH SCORE';
+    const sm=content.match(/(\d+)\s*\/\s*10/);
+    let inner=isH&&sm
+      ?`<div class="hpill">Score ${sm[0]}</div>${content.replace(/\d+\s*\/\s*10\s*[-–:.]?\s*/,'').trim()?`<div class="sbody" style="margin-top:5px;">${content.replace(/\d+\s*\/\s*10\s*[-–:.]?\s*/,'').trim().replace(/\n/g,'<br>')}</div>`:''}`
+      :`<div class="sbody">${content.replace(/\n/g,'<br>')}</div>`;
+    return`<div class="sblock"><div class="shead" style="color:${color}">${emoji} ${label}</div>${inner}</div>`;
+  }).join('');
+}
 
-  function loadExample(i) {
-    const input = document.getElementById('userInput');
-    input.value = examples[i];
-    autoResize(input);
-    input.focus();
+function addBot(text){
+  const m=document.getElementById('msgs');
+  const d=document.createElement('div');
+  d.className='msg bot';
+  d.innerHTML=`<div class="av av-bot">🤖</div><div class="bbl bbl-bot">${fmt(text)}</div>`;
+  m.appendChild(d);scrollBot();
+}
+
+async function send(){
+  const ta=document.getElementById('ta');
+  const text=ta.value.trim();
+  if(!text)return;
+  const btn=document.getElementById('sbtn');
+  btn.disabled=true;
+  ta.value='';ta.style.height='auto';
+  addUser(text);addTyping();
+  try{
+    const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:text})});
+    const data=await res.json();
+    removeTyping();
+    if(data.error)throw new Error(data.error);
+    addBot(data.reply);
+  }catch(err){
+    removeTyping();
+    addBot('⚠️ Something went wrong: '+err.message+'\n\nPlease try again.');
   }
-
-  function autoResize(el) {
-    el.style.height = 'auto';
-    el.style.height = Math.min(el.scrollHeight, 140) + 'px';
-  }
-
-  function handleKey(e) {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      sendMessage();
-    }
-  }
-
-  function hideWelcome() {
-    const w = document.getElementById('welcome');
-    if (w) w.remove();
-  }
-
-  function scrollToBottom() {
-    const m = document.getElementById('messages');
-    m.scrollTop = m.scrollHeight;
-  }
-
-  function addUserMessage(text) {
-    hideWelcome();
-    const container = document.getElementById('messages');
-    const div = document.createElement('div');
-    div.className = 'message user';
-    div.innerHTML = `
-      <div class="avatar avatar-user">👤</div>
-      <div class="bubble bubble-user">${text.replace(/\n/g,'<br>')}</div>
-    `;
-    container.appendChild(div);
-    scrollToBottom();
-  }
-
-  function addTyping() {
-    hideWelcome();
-    const container = document.getElementById('messages');
-    const div = document.createElement('div');
-    div.className = 'message bot';
-    div.id = 'typingIndicator';
-    div.innerHTML = `
-      <div class="avatar avatar-bot">🤖</div>
-      <div class="bubble bubble-bot">
-        <div class="typing">
-          <div class="typing-dot"></div>
-          <div class="typing-dot"></div>
-          <div class="typing-dot"></div>
-        </div>
-      </div>
-    `;
-    container.appendChild(div);
-    scrollToBottom();
-  }
-
-  function removeTyping() {
-    const t = document.getElementById('typingIndicator');
-    if (t) t.remove();
-  }
-
-  function formatReply(text) {
-    const sectionDefs = [
-      { key: 'TOP PROBLEMS',    emoji: '🔴', color: '#c0392b' },
-      { key: 'RETROSPECTIVE',   emoji: '🔄', color: '#457b9d' },
-      { key: 'NEXT SPRINT TIP', emoji: '💡', color: '#e76f51' },
-      { key: 'HEALTH SCORE',    emoji: '❤️', color: '#2d6a4f' },
-    ];
-
-    // Split text by section headers
-    const headerPattern = /(?:🔴|🔄|💡|❤️)?\s*(?:TOP PROBLEMS|RETROSPECTIVE|NEXT SPRINT TIP|HEALTH SCORE[:\s]*\d*\/?\d*)/gi;
-    const headers = text.match(headerPattern) || [];
-    const parts = text.split(headerPattern);
-
-    if (headers.length === 0) {
-      // fallback plain text
-      return `<div class="section-content">${text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'$1')}</div>`;
-    }
-
-    let html = '';
-    headers.forEach((header, i) => {
-      const content = (parts[i + 1] || '').trim()
-        .replace(/^[:：\-\s]+/, '')
-        .replace(/\*\*(.*?)\*\*/g, '$1')
-        .replace(/#{1,6}\s*/g, '');
-
-      const def = sectionDefs.find(s => header.toUpperCase().includes(s.key));
-      const emoji = def ? def.emoji : '📌';
-      const label = def ? def.key : header.trim();
-      const color = def ? def.color : '#333';
-      const isHealth = label === 'HEALTH SCORE';
-      const scoreMatch = content.match(/(\d+)\s*\/\s*10/);
-
-      html += `<div class="section-block">
-        <div class="section-heading" style="color:${color}">
-          ${emoji} ${label}
-        </div>`;
-
-      if (isHealth && scoreMatch) {
-        const reason = content.replace(/\d+\s*\/\s*10\s*[-–:.]?\s*/, '').trim();
-        html += `<div class="health-pill">Score ${scoreMatch[0]}</div>`;
-        if (reason) html += `<div class="section-content" style="margin-top:6px;">${reason.replace(/\n/g,'<br>')}</div>`;
-      } else {
-        html += `<div class="section-content">${content.replace(/\n/g,'<br>')}</div>`;
-      }
-
-      html += '</div>';
-    });
-
-    return html;
-  }
-
-  function addBotMessage(text) {
-    const container = document.getElementById('messages');
-    const div = document.createElement('div');
-    div.className = 'message bot';
-    div.innerHTML = `
-      <div class="avatar avatar-bot">🤖</div>
-      <div class="bubble bubble-bot">${formatReply(text)}</div>
-    `;
-    container.appendChild(div);
-    scrollToBottom();
-  }
-
-  async function sendMessage() {
-    const input = document.getElementById('userInput');
-    const text = input.value.trim();
-    if (!text) return;
-
-    const btn = document.getElementById('sendBtn');
-    btn.disabled = true;
-    input.value = '';
-    input.style.height = 'auto';
-
-    addUserMessage(text);
-    addTyping();
-
-    try {
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: text })
-      });
-
-      const data = await response.json();
-      removeTyping();
-
-      if (data.error) throw new Error(data.error);
-      addBotMessage(data.reply);
-
-    } catch (err) {
-      removeTyping();
-      addBotMessage('⚠️ Something went wrong: ' + err.message + '\n\nPlease try again in a moment.');
-    }
-
-    btn.disabled = false;
-    input.focus();
-  }
+  btn.disabled=false;ta.focus();
+}
 </script>
 </body>
 </html>
