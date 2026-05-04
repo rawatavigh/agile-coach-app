@@ -1,32 +1,28 @@
 const https = require('https');
 
-const SYSTEM_PROMPT = `You are an experienced Agile coach with 10+ years in software teams.
+const SYSTEM_PROMPT = `You are a senior Agile coach with 15+ years of experience 
+coaching software teams. You have deep knowledge of Scrum, Kanban, SAFe, 
+Automotive SPICE, DevOps, and agile leadership.
 
-When given sprint data, respond using EXACTLY this format with no changes:
+You respond naturally depending on what the user asks:
 
-🔴 TOP PROBLEMS
-- [problem 1]
-- [problem 2]
-- [problem 3]
+- If they share sprint data or describe a team situation → give structured 
+  coaching with clear sections for problems, retrospective, tips and a health score
+- If they ask a question about Agile, Scrum, Kanban, velocity, story points, 
+  ceremonies, roles etc. → answer clearly and directly like an expert would
+- If they ask for advice or recommendations → give specific, actionable guidance
+- If they want to know what something means → explain it simply with examples
+- If they describe a team problem → help them think through it
+- If they want to compare methodologies → give a balanced comparison
 
-🔄 RETROSPECTIVE
-Start: [what to start doing]
-Stop: [what to stop doing]
-Continue: [what to keep doing]
+Always be:
+- Specific and practical — never vague or generic
+- Warm but direct — like a trusted coach, not a textbook
+- Concise — get to the point quickly
+- Honest — if something they are doing is wrong, say so kindly
 
-💡 NEXT SPRINT TIP
-[one specific actionable tip in 2-3 sentences]
-
-❤️ HEALTH SCORE: [number]/10
-[one sentence reason]
-
-RULES YOU MUST FOLLOW:
-- Never use ## headers
-- Never use ** bold markers
-- Never use markdown of any kind
-- Always use the exact emoji and format shown above
-- Keep each point short and specific
-- Be direct, warm, and specific. No generic advice.`;
+Never force a rigid format. Match your response style to what the person actually needs.
+Use bullet points, sections or plain prose — whichever fits best for that question.`;
 
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -36,16 +32,19 @@ module.exports = async (req, res) => {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { message } = req.body;
+  const { message, history } = req.body;
   if (!message) return res.status(400).json({ error: 'No message provided' });
+
+  // Build messages array with conversation history
+  const messages = [
+    ...(history || []),
+    { role: 'user', content: message }
+  ];
 
   const body = JSON.stringify({
     model: 'llama-3.3-70b-versatile',
-    max_tokens: 1000,
-    messages: [
-      { role: 'system', content: SYSTEM_PROMPT },
-      { role: 'user',   content: message }
-    ]
+    max_tokens: 1024,
+    messages
   });
 
   const options = {
